@@ -1,0 +1,83 @@
+ .navbar {
+    background-color: #A0C49D;
+    color: #fff;
+    height: 50px;
+  }
+  
+  .navbar-left {
+    float: left;
+    padding: 0.1%;
+  }
+  
+  .navbar-right {
+    float: right;
+    padding: 0.1%;
+    
+  }
+  
+  .navbar-brand {
+    color: #000000;
+    font-size: 18px;
+    text-decoration: none;
+    padding: 0.1%;
+    margin-left: 10px;
+  }
+  
+  .username {
+    color: #000000;
+    font-size: 18px;
+    text-decoration: none;
+    
+  }
+  
+  .logout-btn {
+    color: #fff;
+    background-color: #c0392b;
+    padding: 6px 12px;
+    border-radius: 4px;
+    text-decoration: none;
+    margin-right: 10px;
+  }
+  
+  .logout-btn:hover {
+    background-color: #a93226;
+  }
+  
+  .container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  h1 {
+    text-align: center;
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    
+  }
+  
+  table th, table td {
+    padding: 8px;
+    border: 1px solid #ccc;
+  }
+  
+  table th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+  }
+  
+  table tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+  
+  table tr:hover {
+    background-color: #e5e5e5;
+  }
+  
+  select {
+    padding: 4px;
+  }
+  
