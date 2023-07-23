@@ -2,7 +2,7 @@
 session_start();
 if (!isset($_SESSION['npm'])) {
     header('Location: login.php');
-    exit(); // Tambahkan pernyataan exit() untuk menghentikan eksekusi skrip setelah pengalihan
+    exit();
 }
 include 'db_connect.php';
 $pdo = pdo_connect_mysql();
@@ -29,41 +29,41 @@ $stmt = $pdo->prepare('SELECT pengajuan.*, users.npm, users.nama, users.semester
 $stmt->execute([$id_users]);
 $pengajuan = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-// Proses pengiriman form pengajuan
-if (!empty($_POST)) {
-    $judul = isset($_POST['judul']) ? $_POST['judul'] : '';
+// Ambil semua data pengajuan kecuali pengajuan milik mahasiswa yang sedang login
+$stmtAllPengajuan = $pdo->prepare('SELECT pengajuan.*, users.npm, users.nama, users.semester, status.nama_status
+                                  FROM pengajuan
+                                  JOIN users ON pengajuan.id_users = users.id_users
+                                  JOIN status ON pengajuan.id_status = status.id_status
+                                  WHERE pengajuan.id_users != ?
+                                  ORDER BY pengajuan.tanggal DESC');
+$stmtAllPengajuan->execute([$id_users]);
+$all_pengajuan = $stmtAllPengajuan->fetchAll(PDO::FETCH_ASSOC);
 
-    if ($pengajuan) {
-        // Jika pengguna telah mengajukan judul sebelumnya, lakukan update judul di database
-        $id_pengajuan = $pengajuan[0]['id_pengajuan'];
+// Menghitung tingkat kemiripan judul menggunakan Dice Coefficient
+function calculateDiceCoefficient($string1, $string2)
+{
+    $string1 = strtolower($string1);
+    $string2 = strtolower($string2);
 
-        $stmt = $pdo->prepare('UPDATE pengajuan SET judul = ? WHERE id_pengajuan = ?');
-        $stmt->execute([$judul, $id_pengajuan]);
-    } else {
-        // Jika pengguna belum pernah mengajukan judul, lakukan insert judul baru ke database
-        $stmt = $pdo->prepare('INSERT INTO pengajuan (id_users, judul, id_status) VALUES (?, ?, 4)');
-        $stmt->execute([$id_users, $judul]);
+    $bigrams1 = getBigrams($string1);
+    $bigrams2 = getBigrams($string2);
+
+    $intersection = count(array_intersect($bigrams1, $bigrams2));
+    $total = count($bigrams1) + count($bigrams2);
+
+    return ($intersection * 2) / $total;
+}
+
+function getBigrams($string)
+{
+    $bigrams = [];
+    $length = strlen($string);
+
+    for ($i = 0; $i < $length - 1; $i++) {
+        $bigrams[] = substr($string, $i, 2);
     }
 
-    // Redirect to mahasiswa.php after submission
-    header('Location: mahasiswa.php');
-    exit();
-} else {
-    // Jika pengajuan sudah ada, tampilkan pesan
-    $msg = 'Anda telah mengajukan judul sebelumnya.';
-
-    // Jika tombol Save di klik, tampilkan konfirmasi
-    if (isset($_POST['save'])) {
-        $judul = isset($_POST['judul']) ? $_POST['judul'] : '';
-
-        // Tampilkan konfirmasi dengan menggunakan JavaScript
-        echo '<script>
-                if (confirm("Apakah Anda yakin ingin mengajukan perubahan judul?")) {
-                    document.getElementById("formUpdate").submit();
-                }
-                return false;
-              </script>';
-    }
+    return $bigrams;
 }
 ?>
 
@@ -80,7 +80,7 @@ if (!empty($_POST)) {
 <body>
     <nav class="navbar">
         <div class="navbar-left">
-            <span class="navbar-brand">Beranda Mahasiswa</span>
+            <span class="navbar-brand">Beranda Admin</span>
         </div>
         <div class="navbar-right">
             <span class="username">Halo, <?php echo $nama; ?></span>
@@ -109,7 +109,6 @@ if (!empty($_POST)) {
             <p><?= $msg ?></p>
             <?php endif; ?>
         </div>
-
         <h2>Daftar Pengajuan Judul TA</h2>
         <table>
             <tr>
@@ -119,9 +118,13 @@ if (!empty($_POST)) {
                 <th>Semester</th>
                 <th>Tanggal</th>
                 <th>Judul</th>
+                <th>Kemiripan</th>
                 <th>Status</th>
             </tr>
-            <?php foreach ($pengajuan as $index => $row) : ?>
+            <?php
+            // Display rows and their corresponding similarity values
+            foreach ($pengajuan as $index => $row) :
+            ?>
             <tr>
                 <td><?= $index + 1 ?></td>
                 <td><?= $row['npm'] ?></td>
@@ -129,6 +132,19 @@ if (!empty($_POST)) {
                 <td><?= $row['semester'] ?></td>
                 <td><?= $row['tanggal'] ?></td>
                 <td><?= $row['judul'] ?></td>
+                <td>
+                    <?php
+                        // Calculate similarity and store the results in an array
+                        $similarityArray = array();
+                        foreach ($all_pengajuan as $row2) {
+                            $similarity = calculateDiceCoefficient($row['judul'], $row2['judul']);
+                            $similarityArray[] = $similarity;
+                        }
+                        foreach ($similarityArray as $similarityValue) {
+                            echo number_format($similarityValue * 100, 2) . "%<br>";
+                        }
+                        ?>
+                </td>
                 <td><?= $row['nama_status'] ?></td>
             </tr>
             <?php endforeach; ?>

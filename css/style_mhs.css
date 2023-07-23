@@ -1,127 +1,125 @@
 body {
-    margin: 0;
-    padding: 0;
-    font-family: Arial, sans-serif;
-    background-color: #C4D7B2;
-  }
-  
-  .navbar {
-    background-color: #A0C49D;
-    color: #fff;
-    height: 50px;
-  }
-  
-  .navbar-left {
-    float: left;
-    padding: 15px;
-  }
-  
-  .navbar-right {
-    float: right;
-    padding: 15px;
-  }
-  
-  .navbar-brand {
-    color: #000000;
-    font-size: 18px;
-    text-decoration: none;
-    padding: 15px;
-  }
-  
-  .username {
-    color: #000000;
-    font-size: 18px;
-    text-decoration: none;
-  }
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  background-color: #bec6ff;
+}
 
-  .container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-  }
-  
-  .card {
-    margin-top: 10%;
-    background-color: #A0C49D;
-    border-radius: 5px;
-    padding: 20px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  }
-  
-  h1 {
-    text-align: center;
-  }
-  
-  .form-group {
-    margin-bottom: 20px;
-    margin-right: 20px;
-    
-  }
-  
-  label {
-    display: block;
-    color: #000000;
-  }
-  
-  input[type="text"] {
-    width: 100%;
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    background-color: #C4D7B2;
-  }
+.navbar {
+  background-color: #6576ff;
+  color: #fff;
+  height: 50px;
+}
 
-  
-  button[type="submit"] {
-    background-color: #4CAF50;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    cursor: pointer;
-    font-size: 16px;
-    border-radius: 5px;
-  }
-  
-  button[type="submit"]:hover {
-    background-color: #45a049;
-  }
-  
-  .username {
-    margin-right: 10px;
-  }
-  
-  .logout-btn {
-    color: #fff;
-    background-color: #c0392b;
-    padding: 6px 12px;
-    border-radius: 4px;
-    text-decoration: none;
-  }
-  
-  .logout-btn:hover {
-    background-color: #a93226;
-  }
+.navbar-left {
+  float: left;
+  padding: 15px;
+}
 
-  table {
-    width: 100%;
-    border-collapse: collapse;
-  }
-  
-  table th, table td {
-    padding: 8px;
-    border: 1px solid #ccc;
-  }
-  
-  table th {
-    background-color: #f2f2f2;
-    font-weight: bold;
-  }
-  
-  table tr:nth-child(even) {
-    background-color: #f9f9f9;
-  }
-  
-  table tr:hover {
-    background-color: #e5e5e5;
-  }
-  
+.navbar-right {
+  float: right;
+  padding: 15px;
+}
+
+.navbar-brand {
+  color: #000000;
+  font-size: 18px;
+  text-decoration: none;
+  padding: 15px;
+}
+
+.username {
+  color: #000000;
+  font-size: 18px;
+  text-decoration: none;
+}
+
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.card {
+  margin-top: 10%;
+  background-color: #bec6ff;
+  border-radius: 5px;
+  padding: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+  text-align: center;
+}
+
+.form-group {
+  margin-bottom: 20px;
+  margin-right: 20px;
+}
+
+label {
+  display: block;
+  color: #000000;
+}
+
+input[type="text"] {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #bec6ff;
+}
+
+button[type="submit"] {
+  background-color: #4152d2;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  border-radius: 5px;
+}
+
+button[type="submit"]:hover {
+  background-color: #6576ff;
+}
+
+.username {
+  margin-right: 10px;
+}
+
+.logout-btn {
+  color: #fff;
+  background-color: #c0392b;
+  padding: 6px 12px;
+  border-radius: 4px;
+  text-decoration: none;
+}
+
+.logout-btn:hover {
+  background-color: #a93226;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+table th,
+table td {
+  padding: 8px;
+  border: 1px solid #ccc;
+}
+
+table th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+}
+
+table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+table tr:hover {
+  background-color: #e5e5e5;
+}
